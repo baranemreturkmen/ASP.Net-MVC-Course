@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Sales";
+}
+
+<h2>Sales</h2>
+
+<input id="text1" name="text1" type="text" />
+<input id="button1" name="button1" type="button" value="Bana Tıkla" />
+<a href="/Home/Products">Products sayfasına git.</a>
+
+<!-- Yukarıdaki gibi yazmak zorunda değilsin html helpers kullanabilirsin!-->
+
+<style>
+   .red
+   {
+       color:red;
+   }
+</style>
+
+<!--Html ActionLinke parametre olarak controller girmezsem eğer Products HomeController altında olduğu için gideceği yeri anlar. Ama ekstra controller parametresi de verebilirim.-->
+
+<hr />
+@Html.ActionLink("Products sayfasına git","Products")<br />
+@Html.ActionLink("Categories sayfasına git!","Categories","Home2",new { deger="Emre",deger2="Turkmen"},
+    new { tittle = "Products sayfasına sizi yönlendirir",@class = "red"})<br />
+<!--link içerisinde geçmesini istediğim degerleri ve linke ait ozellikleri verdim.-->
+@Html.TextArea("textarea1","Özgeçmiş",8,30,null)<br />
+@Html.TextBox("text2","Adınız")<br />
+
+<!--Buton yok malesef butonları yukarıdaki gibi inputdan faydalanarak oluşturmalısın-->
+<!--Linki vermediğim zaman default olarak ana sayfaya ulaşma ayarını nasıl yapabilirim?-->

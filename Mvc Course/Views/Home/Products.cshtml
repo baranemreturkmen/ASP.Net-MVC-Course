@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Products";
+}
+
+<h2>Products</h2>
+
+<!--HTML Açıklama Satırı : Kullanıcı Tarafından Görülebilir.-->
+
+@{
+    //burada C# kodu yazabilirim.
+
+    string ad = "Emre";
+    string soyad = "Türkmen";
+
+    //bu blok içinde oluşturduğum değişkenleri html içerisinde kullanmak istersem eğer @ kullanıyorum.
+
+    //bu blok içerisine de html yazabiliyorum ama değişkenleri @ ile çağırmak zorundayım.
+
+    <ul>
+        <li>
+            @ad
+        </li>
+    </ul>
+
+    @*
+        Burası razor açıklama satırı bloğu : kullanıcı tarafından gözükmez.
+    *@
+}
+
+@ad
+<br />
+@soyad
+
+<br />
+@ad + " " + soyad
+<br />
+@ad + " " + @soyad
+<br />
+(@ad + " " + soyad)
+<br />
+@(ad + " " + soyad)
+<br />

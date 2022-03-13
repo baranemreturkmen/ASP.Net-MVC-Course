@@ -1,0 +1,66 @@
+﻿@using Mvc_Course.ViewModels
+@model ExamplesPageViewModel
+@{
+    ViewBag.Title = "Examples";
+}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+
+<h2>Examples</h2>
+
+<div>
+    <div class="container">
+
+        <div class="row-">
+            <div class="col-md-12">
+                <h2>DropDown Doldurma</h2>
+                <hr />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                @using (Html.BeginForm())
+                {
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            <label class="col-md-2 control label">City : </label>
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(x => x.SelectedCityId, Model.CitiesData, "Lütfen seçiniz", new { @class = "form-control dropdown" })
+                                <!--DropDownList kullandığımızda içersinde Lambda expressions yazabileceğimiz bir format geliyor.-->
+                                <!--Lambda expressionda DropDownListte seçilen değerin sonucunda dönecek olan degerin atılacagı propertyi veriyorum. Verilerin DropDownListe yüklenceği propertyleri vermiyorum.-->
+                                <!--Verilerin DropDownListe yüklenecegi property Model.CitiesData-->
+                                <!--Aslında benim burada asıl model binding yaptığım, bir controllera bağladım property SelectedCityId propertysi post işlemi sonucunda dolacak olan property o-->
+                                <!--Get kısmında ve post sonrasında CitiesData propertysini fake data ile doldurup DropDownList için hazırlıyorum. DropDownListi bu property dolduruyor.-->
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control label">Country : </label>
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(x=>x.SelectedCountryId, Model.CountriesData, "Lütfen seçiniz", new { @class = "form-control dropdown" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10 col-md-offset-2">
+                                <button class="btn btn-success" type="submit">Send</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10 col-md-offset-2">
+                                <div class="alert alert-info">
+                                    <b>Selected Country ID :</b> @Model.SelectedCityId<br />
+                                    <b>Selected City ID :</b> @Model.SelectedCountryId
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

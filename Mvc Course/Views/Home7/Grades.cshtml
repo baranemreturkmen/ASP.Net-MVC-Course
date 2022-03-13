@@ -1,0 +1,136 @@
+﻿@using Mvc_Course.ViewModels
+@model ExamplesPageViewModel
+
+@{
+    ViewBag.Title = "Grades";
+}
+
+<h2>Grades</h2>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+
+<div>
+    <div class="container">
+
+        <div class="row-">
+            <div class="col-md-12">
+                <h2>DropDown Doldurma</h2>
+                <hr />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                @using (Html.BeginForm())
+                {
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            <label class="col-md-2 control label">City : </label>
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(x => x.SelectedCityId, Model.CitiesData, "Lütfen seçiniz", new { @class = "form-control dropdown" })
+                                <!--DropDownList kullandığımızda içersinde Lambda expressions yazabileceğimiz bir format geliyor.-->
+                                <!--Lambda expressionda DropDownListte seçilen değerin sonucunda dönecek olan degerin atılacagı propertyi veriyorum. Verilerin DropDownListe yüklenceği propertyleri vermiyorum.-->
+                                <!--Verilerin DropDownListe yüklenecegi property Model.CitiesData-->
+                                <!--Aslında benim burada asıl model binding yaptığım, bir controllera bağladım property SelectedCityId propertysi post işlemi sonucunda dolacak olan property o-->
+                                <!--Get kısmında ve post sonrasında CitiesData propertysini fake data ile doldurup DropDownList için hazırlıyorum. DropDownListi bu property dolduruyor.-->
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control label">Country : </label>
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(x => x.SelectedCountryId, Model.CountriesData, "Lütfen seçiniz", new { @class = "form-control dropdown" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10 col-md-offset-2">
+                                <button class="btn btn-success" type="submit">Send</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10 col-md-offset-2">
+                                <div class="alert alert-info">
+                                    <b>Selected Country ID :</b> @Model.SelectedCityId<br />
+                                    <b>Selected City ID :</b> @Model.SelectedCountryId
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#SelectedCountryId").change(function () {
+
+        var ddlCountry = $(this);
+        var countryId = ddlCountry.val();
+
+        if (countryId != "" || countryId != "-1") {
+
+            $("#SelectedCityId option").not(":first").remove();
+            //Bunu ayrıca burada kullanmamın sebebi şu yeni bir ülke seçildiğinde yeni şehirler gelmesini istiyorsam eğer
+            //Şehirlere ait DropDownListi önden bir temizlemeliyim.
+
+            $.ajax({
+                method: "GET",
+                url: '@Url.Action("GetCitiesByCountry","Home7")' + '/' + countryId
+
+            }).done(function (result) {
+
+                var ddlCity = $("#SelectedCityId");
+                //Bu şekilde DropDownListlerden City olanını yakalıyorum.
+
+                for (var i = 0; i < result.length; i++) {
+                    var cityName = result[i].CityName;
+                    var cityId = result[i].CityId;
+                    var opt = $("<option></option>");
+                    //jquery ile option elementi oluşturdum.
+
+                    opt.text(cityName);
+                    //text metodu ile cityName'i option'ın içerisine ekliyorum.
+                    opt.attr("value", cityId);
+                    //attribute ile de option html elementinin value değerine cityId değerini veriyorum.
+                    //opt.val(cityId); şeklinde de ekleyebilirdin.
+
+                    ddlCity.append(opt);
+                    //Sonrasında şehirler için DropDownList olan DropDownList içerisine bu option elementini ekliyorum.
+                    //İlgili veriyi country değeri seçildikten sonra bu şekilde şehir dropdownlistine doldurmuş oldum.
+                }
+            })
+            //Şehirler DropDownListini temizledikten sonra bir ajax isteği başlattık.
+            //Ajax isteği Get işlemi yapacak. Url ile veri isteği yapacağı adresi veriyorum. Verileri alacağı actionı veriyorum.
+            //Bana url'i otomatik oluşturacak yani aslında şunu yapmış olacak. Home7/GetCitiesByCountry
+            //Url.Action("GetCitiesByCountry","Home7") -> Home7/GetCitiesByCountry
+            //Ajax metodu kapandığında başarılı ise bir done metodu ekliyorum. done metodunun içerisinde bir fonksiyon çalıştırılacak, fonksiyona sonuç değerleri gönderilir. Bu ajax isteği başarılı olursa eğer bize seçili şehirler gelecek. Seçili şehirleri diğer DropDown içerisine yüklüyor olacağız.
+
+        }
+        else {
+            //$("SelectedCityId").empty();
+            $("#SelectedCityId option").not(":first").remove();
+        }
+    });
+
+    //Script içerisinde javasctript kodları yazabiliyorum. Biz burada jquery kodları yazacağız.
+    //Yakalamak istediğim DropDownList SelectedCountryId ile çalışıyordu. Id ile yakalamak için # kullanıyoruz.
+    //change olayında fonksiyon çalışmasını istiyoruz.
+    //Fonksiyonda seçili country id'yi alacak ve bir ajax isteği ile arka planda gidip bir controllerda ki metodu çağırıp
+    //şehir isimlerini bana ver deyip alıp 2. DropDown içerisine yerleştirecek.
+    //$(this) o an event'in çalıştığı fırladığı yani değişim event'ini yapan hangi DropDownList ise o DropDownListi veriyordu.
+    //Yani aslında ben $(this) sayesinde değişimin gerçekleştirecek olan bağlı olduğumuz(ilk seçimi yapacağım DropDownListden bahsediyor) DropDownListi alıp değişkene atadım. 
+    //val() ile de aldığım DropDownListin değerini okuyorum.
+    //if ile countryler boş değil ise eğer bir ajax isteği ile şehirleri isteyeceğim yapıyı kurdum.
+    //else ile birşey seçilmediyse eğer Country DropDownListinde şehir bilgisi kısmını temizliyorum. Yani şehir DropDownListinde şehirlere ait hiçbir şey çıkmıyor. Bunu da yukarıda $("SelectedCityId") ile elementi yakaladıktan sonra empty() metodu ile yapıyorum. Ama empty metodu bütün herşeyi siliyor Lütfen Seçinizi silmek istemiyorsam bunu nasıl yaparım?
+    //.not(":first") ile DropDownListin ilk elemanını yani Lütfen Seçinizi yakaladığım elementlere dahil etmiyorum.
+    //.remove() ile yakaladığım diğer elementleri DropDownList içerisinden siliyorum. option ile DropDownListin hepsini yakalamak yerine DropDownList içerisinde ki herbir şehire Html tarafında karşılık gelen optionlar üzerinden ilerliyorum.
+    //Aslında DropDownList dediğimiz şey bir select elementi html tarafında ve içerisinde ki herbir element bir option elementi ile tutuluyor.
+    //Her optionın arka kısmında value olarak id değeri tutulurken içerisinde ise metin değeri olarak Şehir ve ülke isimleri tutuluyor.
+    //Şimdi Lütfen Seçiniz değeri seçilirse DropDownList içerisinde Html tarafında value "" değerine karşılık geliyor. Kod tarafında biz controller içerisinde başlangıç değeri olarak -1 atamıştık.
+</script>

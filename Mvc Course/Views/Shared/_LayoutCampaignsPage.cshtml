@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <style>
+        .block {
+            display: block;
+            margin: 10px;
+            border: 2px dotted gray;
+            padding: 10px;
+        }
+
+        .block2 {
+            display: inline-block;
+            margin: 5px;
+            border: 2px dotted #ff6a00;
+            padding: 10px;
+        }
+
+        #menu ul li {
+            display: inline-block;
+            width: 100px;
+            height: 30px;
+            text-align: center;
+            border: 1px solid #00ffff;
+            background-color: blueviolet;
+            margin: 5px;
+            line-height: 30px;
+            vertical-align: middle;
+        }
+
+            #menu ul li a {
+                color: #ffffff;
+                text-decoration: none;
+                font-size: smaller;
+            }
+
+        #menu li:hover {
+            background-color: #ffd800;
+        }
+
+            #menu li:hover a {
+                color: #0026ff;
+            }
+    </style>
+
+</head>
+<body>
+
+    <div id="menu" class="block">
+        @*Header*@
+        <ul>
+            <li>@Html.ActionLink("CommentsPage", "Comments", "Home3")</li>
+            <li>@Html.ActionLink("BlogPage", "Blog", "Home3")</li>
+            @RenderSection("links")
+            <!--Section aynı layoutu kullanıp farklı view dosyalarında sectionlara farklı html kodlarını entegre etmemizi sağlıyor yani ben buradaki LayoutCampaignsPage iskeletini kullanıyorum. Bu layout kullananan viewlar bu sectionlara istedikleri html kodlarını entegre ediyorlar. Bu sayede farklı farklı layoutlar oluşturmak zorunda kalmayıp genel bir iskelet oluşturup, sectionlara farklı yapıları entegre ediyorum. Sayfalardaki genel yapı aynı ise viewlar bu layout alıp farklı olan kodlarını sectionlara dahil ediyorlar. Bu durum bir classı miras olarak alıp farklı özellikleri metodları vs. entegre etme yapısına inheritancea çok benziyor aslında hatta bire bir aynı bile diyebiliriz. İnheritancedaki ana classımız bir şablon bir iskelet yapısı görüyordu aslında. Burada da section yapısını içeren LayoutCampaignsPage cshtml dosyasımız ana bir yapı iskelet şablon olarak duruyor. Tıpkı classı inherit eden diğer classların ana classa özgü metod ve alanları kullanması gibi burada da bu LayoutCampaignsPage layoutunu kullanan view dosyaları burada ki genel yapıyı kullanıp sectiona kendi kodlarını dahil ediyorlar tıpkı ana classı inherit eden diğer classların kendi metodlarına ve alanlarına sahip olması gibi.-->
+
+            <!--Ben burada şöyle bir yapı istiyorum ama nasıl yapılır bilmiyorum. Blog sayfasındayken yukarıdaki blog linki gözükmesin Comments gözüksün, Comments sayfasındayken de tam tersi olsun. Şuan her 2 sayfada da her iki link gözüküyor ve bu durum saçma!-->
+
+            <!--Eğer bu layoutu kullanan bir view dosyası varsa buradaki sectionları mutlaka kullanmak zorunda yoksa view dosyasının sayfasına gitmeye çalıştığınızda  bu layouta ait section veya sectionlar kullanılmadığı için ortaya bir hata çıkacaktır ve sayfaya ulaşamayacaksınız.-->
+
+            <!--Bu durumda sectionları yazarken sectionın illa zorunlu olup olmadığını belirten parametreyi de girmelisiniz yukarıdaki hata ile karşılaşmak istemiyorsanız. Default olarak bu parametre true geliyor yani zorunlu oluyor.
+       Zorunlu olmaması için RenderSection("footer",false) olmalı. Böylece bu layoutu kullanan view dosyaları bu sectionı doldurmak zorunda kalmayacaktır.-->
+        </ul>
+        <hr />
+    </div>
+
+    <div class="block">
+        @RenderBody()
+    </div>
+
+    <div class="block">
+        @*Footer*@
+        <hr />
+        <b>Tüm hakları saklıdır. &copy;</b>
+    </div>
+
+    <div id="menu">
+        @Html.ActionLink("CustomersPageLink", "Customers", "Home")<br />
+        @RenderSection("footer")
+    </div>
+
+</body>
+</html>

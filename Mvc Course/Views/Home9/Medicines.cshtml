@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Medicines";
+}
+
+<h2>Medicines</h2>
+
+<button id="btnLoad" type="button" class="btn btn-success">Verileri Yükle</button>
+<br />
+<input id="txtData" type="text" class="form-control" placeholder="Veri Giriniz..." style="width:200px;" />
+<button id="btnLoad2" type="button" class="btn btn-success">Verileri Gönder &amp; Yükle</button>
+<!--Amacımız textbox'da ki verinin buton2'ye basıldıktan sonra get talebi ile karşı tarafa gönderilmesi.-->
+
+<hr />
+
+<div id="loading" class="alert alert-warning" style="display:none;">Yükleniyor...</div>
+
+<ul id="list" class="list-group">
+</ul>
+
+<script>
+
+    $(function () {
+
+        $("#btnLoad").click(function () {
+
+            $("#list").empty();
+
+            $("#loading").show(300, function (d) {
+
+                $.get("/Home9/GetDatas", function (d) {
+
+                    $("#list").html(d);
+                    $("#loading").hide(300);
+                });
+            });
+        });
+
+        //Yukarıda önceki yazdığım kodlar çalışıyor Bill.cshtml
+
+        $("#btnLoad2").click(function () {
+
+            $("#list").empty();
+
+            $("#loading").show(300, function (d) {
+
+                //$.get("/Home9/GetDatas", function (d) {
+
+                //    $("#list").html(d);
+                //    $("#loading").hide(300);
+                //});
+
+                //Bu sefer veri gönderiyoruz. Öncesinde tabi ki veriyi almak lazım.
+
+                data = $("#txtData").val();
+                $.get("/Home9/GetDatas", { data: data }, function (d) {
+
+                    $("#list").html(d);
+                    //$("#loading").hide(300);
+                }).fail(function () {
+                    alert("Hata oluştu!")
+                }).always(function () {
+                    $("#loading").hide(300);
+                });
+            });
+        });
+    });
+
+    //$.get 2. parametre karşı tarafa gönderilecek datayı tutan bir json objesi. Controllerda ki parametre adı ile burada ki json objesinde ki property adı aynı olmalı.
+
+    //F12 ile developer modunda network kısmında tarayıcının ne atıyor ne geliyor vs. gidip gelen talepleri görebilirim.
+    //Burada şunu görebilirsin get taleplerin veri gönderimi url'nin içine konularak gönderiliyor. Kritik bilgileri gönderme.
+    //Url karakteri belli bir karaktere kadar olduğu için çok büyük verileri göndermek önerilmez.
+
+    //get metodunda hata olması halinde .fail ile çalışmasını istediğim kodları buraya yazabilirim. get balarılı çalışmazsa eğer
+    //get'in içerisinde ki fonksyion çalışmayacaktır. Bu durumda hide'i sürekli çalışmasını istediğim always'in içerisine konumlandırdım.
+</script>

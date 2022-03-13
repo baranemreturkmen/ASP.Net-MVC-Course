@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Notifications";
+}
+
+<h2>Notifications</h2>
+
+<div>
+    <b>Ad - Soyad :</b>
+    @ViewBag.text1
+    <br />
+    @Html.TextBox("text1")
+    <br />
+    @Html.CheckBox("check1")
+    <br />
+    @Html.DisplayText("text1")
+    <br />
+    @Html.DropDownList("list1")
+    <br />
+    @Html.Hidden("text1")
+    <br/>
+    @Html.Value("text1")
+    <br />
+    @Html.RadioButton("radiobutton","check1")
+    <!--Controllerda oluşturduğum datayı HtmlHelpersdaki Textbox Checkbox RadioButton gibi yapılara atabiliyorum 
+        ve hakkatten de görüyor bu Htmlhelpers yapıları buradaki verileri. Anahtar kelimeler veya Viewbagde . ile verdiğimiz
+        alanlar doğru olduğu sürece problem yok.-->
+<br />
+    <b>Bool veri türü : </b>
+    @ViewBag.check1
+    <br />
+    @Html.ActionLink("ManagersLink","Managers","Home5")
+</div>
+
+

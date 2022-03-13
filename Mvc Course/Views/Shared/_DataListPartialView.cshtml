@@ -1,0 +1,27 @@
+﻿@model List<string>
+
+@foreach (string item in Model)
+{
+    <li id="id_@Model.IndexOf(item)" class="list-group-item">
+        @Ajax.ActionLink("Sil", "RemoveData", new { id = Model.IndexOf(item) },
+       new AjaxOptions() 
+            { LoadingElementId = "loading", 
+            LoadingElementDuration = 300, 
+            HttpMethod = "GET", 
+            InsertionMode = InsertionMode.ReplaceWith, 
+            UpdateTargetId = "id_" + Model.IndexOf(item) }, 
+            new { @class = "btn btn-danger btn-xs" })
+        @*<a href="/Home/RemoveData/@Model.IndexOf(item)" class="btn btn-danger btn-xs">Sil</a>*@
+        &nbsp;@item
+    </li>
+}
+<!--&nbsp metinsel ifadeden ayırıyorum bu şekilde bir boşlukla!-->
+<!--Linke tıkladığm anda metni gönderecek diğer sayfaya RemoveData sayfasına!-->
+<!--Sol yanda çıkan sil butonu ile verileri ajax ile silmek istiyorum amacım bu!-->
+<!--Model'de ki indexof metodunu kullanıp item'in id'sini yazdırıyorum!-->
+<!--PartialView içerisinde de ajax kullanabilirsin!-->
+<!--Burada Ajax ActionLink kullanırken RouteValue parametresini null geçmiyor çünkü burada butona tıklayınca değer yolluyor-->
+<!--Butona tıklayınca hangi elemana tıklıyorsun onu id değerinin gitmesini sağlamalıyız!-->
+<!--Bu linke tıkladığımda bu item'in siliniyor olması lazım. Yani buradaki dolu olan li html elementi boş olan ile değiştirilsin. Komple değiştirilmeli. Bubu ReplaceWith ile sağlıyorum!-->
+<!--Değiştirilecek olan id'li elemente kendisini verdim çünkü kendisinin yapılan değişiklik noktasında silinmesini istiyorum.
+    UpdateTargeetId'de kendisi var yani!-->

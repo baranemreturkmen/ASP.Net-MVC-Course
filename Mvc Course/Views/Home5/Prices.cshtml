@@ -1,0 +1,42 @@
+﻿@using Mvc_Course.Models
+@model Person
+
+<!--Controllerdan model nesnemi yolladım fakat model nesnemi kullanabilmek için model nesnesini burada tanıtmalıyım.-->
+<!-- model Mvc_Course.Models.Person şeklinde using kulannmadan da tanıtabiliyorsun.-->
+
+
+<h2>Prices Page</h2>
+
+<div>
+    <b>Ad : </b>@Model.Name<br />
+    <b>Soyad : </b>@Model.Surname<br />
+    <b>Yaş : </b>@Model.Age<br />
+    <hr />
+    <b>Ad - Soyad : </b>@(Model.Name+" "+ Model.Surname)
+</div>
+
+<div>
+    @using (Html.BeginForm())
+    {
+        <b>Ad : </b>@Html.TextBoxFor(x => x.Name)
+        <b>Soyad : </b>@Html.TextBoxFor(x => x.Surname)
+        <b>Yaş : </b>@Html.TextBoxFor(x => x.Age)
+
+        <input type="submit" value="Gönder" />
+        <!--Yukarıda TextBoxFor ile modelde ki Name propertysine ait değerleri bu textboxa ata demiş olduk.-->
+        <!--Bu değerlerin atamasını Get metodu için kullandığımız Prices Actionında yapmıştık.-->
+        <!--Yukarıda ki tasarlanan submit butonu ile bu değerleri şimdi Post için tasarlanan Prices acitonına gönderiyorum.-->
+        <!--Yani TextBoxFor ile atama yapıyorum ama ön yüzde textboxların değerlerini değiştirip farklı değerleri backendde
+            değerlendirebilirim. Backende burada oluşturduğum model üzerinden gelen Person nesnesine ait değerleri alıp
+            farklı şekilde değerlendirebilirsin kullanabilirsin mesela database yazabilirsin vs. vs.-->
+
+        <!--x modelimi temsil eden bir değişken. lambda expression kullandı burada aslında.-->
+        <!-- Lambda expressions ile linq aynı şey değil bu arada. linq ile yazdığım sorguları lambda expressions ile
+            daha kısa hale getirebilirim.-->
+        <!--Temel farkı burada görebilirsin -> "www.bayramucuncu.com/linq-lambda-expression/" -->
+
+        <!--x modele nasıl bağlandı TextBoxFor içerisinde? yukarıda zaten kullanmak istediğim modeli belirledim. TextBoxFor Htmlhelperı hemen modeli yakaladı. -->
+
+        <!--Birden fazla model olarabilir mi? Birden fazla model olsaydı ne olurdu?-->
+    }
+</div>

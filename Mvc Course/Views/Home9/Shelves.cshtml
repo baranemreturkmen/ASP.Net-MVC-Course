@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Shelves";
+}
+
+<h2>Shelves</h2>
+
+<button id="btnLoad" type="button" class="btn btn-success">Verileri Yükle</button>
+<br />
+<input id="txtData" type="text" class="form-control" placeholder="Veri Giriniz..." style="width:200px;" />
+<button id="btnLoad2" type="button" class="btn btn-success">Verileri Gönder &amp; Yükle</button>
+
+<hr />
+
+<div id="loading" class="alert alert-warning" style="display:none;">Yükleniyor...</div>
+
+<ul id="list" class="list-group">
+</ul>
+
+<script>
+    $(function () {
+
+        $("#btnLoad").click(function () {
+
+            $("#loading").show();
+
+            $("#list").load("/Home9/GetDatas", function () {
+                $("#loading").hide(300);
+            });
+        });
+    
+
+    $("#btnLoad2").click(function () {
+
+        $("#loading").show();
+
+        var data = $("#txtData").val();
+
+        $("#list").load("/Home9/GetDatas", {data : data}, function () {
+            $("#loading").hide(300);
+        });
+    });
+
+    });
+    //Load metodu veri gönderiminde get'de ki get yöntemini değil post metodunu kullanıyor. Postlarda veri FormData içinde gider.
+    //Fakat Load metodu veri göndermezsen veri çekersen eğer Get metodunu kullanır.
+</script>

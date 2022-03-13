@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "Inventories";
+}
+
+<h2>Inventories</h2>
+
+<!--ActionLink metodu ile bir link koyup bir buton koyup o butona tıklandığında Ajax ile ilgili veri çekileceği gibi-->
+<!--BeginForm ile de bir veriyi formu sunucuya gönderme işlemini ajax ile yapabilirim.-->
+<!--ActionLink -> Veri Çekme Frontendden, BeginForm -> Frontende veri gönderme.-->
+
+<!--a class="btn btn-success">Verileri Yükle</!--a>
+<!--Verilerin butona basıldığı anda sayfa yüklenmeden bu butonun altında bir yere (linke) yüklenmesi amacım.-->
+<!--Linkleri de bootstrap ile buton gibi gösterebiliyoruz.-->
+
+@Ajax.ActionLink("Verileri Yükle","LoadData",null,new AjaxOptions() { HttpMethod = "GET",UpdateTargetId = "list"
+    ,InsertionMode = InsertionMode.Replace, LoadingElementId = "loading",LoadingElementDuration = 300}, new { @class =  "btn btn-success"})
+<!--Butona tıklayınca asenkron olarak sunucuya gidip oradaki action'ı çalıştıracak ajax ile. LoadData-->
+<!--LoadData database'den verileri çekecek. (Ben elle oluşturdum) bir partialview'ı çağırıp -->
+<!--PartialView'da kendisine gelen modele uygun bir li yapacak. Ajax metodu LoadData'dan dönen li'leri alacak -->
+<!--Update target id'li elementi bulup insertion mode ile içini silip yükleyecek. Bu arada insertion mode farklı seçeneklere sahip-->
+<!--İçini sil öncesini sonrasını sil vs. tarzında-->
+<!--LoadingElementDuration ekranda kalma süresi değil ekrana gelme ve gitme süresi 2'sini karıştırma birbirine! ms cinsinden-->
+<!--Burada butona bastıktan sonra liste elementleri ayrı sayfada çıkarsa eğer muhtemelen script dosyasının altında ki yüklü olan jquery sürümü ile _Layout sayfasında ki çağırılan jquery sürümü farklıdır!-->
+
+<hr />
+<div id="loading" class="alert alert-warnig" style="display:none;">
+    Yükleniyor...
+</div>
+<!--style ile ekranda başlangıçta gösterme diyorum.-->
+
+<ul id ="list" class="list-group">
+
+</ul>

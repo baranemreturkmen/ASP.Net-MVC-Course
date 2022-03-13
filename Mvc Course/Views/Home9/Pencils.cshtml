@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "Pencil";
+}
+
+<h2>Pencils</h2>
+
+<button id="btnLoad" type="button" class="btn btn-success">Verileri Yükle</button>
+<br />
+<input id="txtData" type="text" class="form-control" placeholder="Veri Giriniz..." style="width:200px;" />
+    <button id="btnLoad2" type="button" class="btn btn-success">Verileri Gönder &amp; Yükle</button>
+
+<hr />
+
+<div id="loading" class="alert alert-warning" style="display:none;">Yükleniyor...</div>
+
+<ul id="list" class="list-group">
+</ul>
+
+<script>
+    $(function () {
+
+        $("#btnLoad").click(function () {
+
+            $.ajax({
+                method: "POST",
+                url: "/Home9/GetDatas",
+                beforeSend: function () {
+                    $("#list").empty();
+                    $("#loading").show(300);
+                }
+            }).done(function (d) {
+                $("#list").html(d);
+            }).fail(function () {
+                alert("Hata oluştu...");
+            }).always(function () {
+                $("loading").hide(300);
+            });
+
+        });
+
+        $("#btnLoad2").click(function () {
+
+            var dat = $("#txtData").val();
+
+            $.ajax({
+                method: "POST",
+                data: {data:dat},
+                url: "/Home9/GetDatas",
+                beforeSend: function () {
+                    $("#list").empty();
+                    $("#loading").show(300);
+                }
+            }).done(function (d) {
+                $("#list").html(d);
+            }).fail(function () {
+                alert("Hata oluştu...");
+            }).always(function () {
+                $("loading").hide(300);
+            });
+
+        });
+
+    });
+    //Notes sayfasında veri alıyordum GET vardı şimdi veri yolluyorum POST ile bu yollama işlemini yapıyorum.
+    //Get ile de veri yollarım ama yollayacağım veri url'in sonuna eklenir. Post ile formdata denilen objenin içine 
+    //konularak istek ile beraber gönderiliyordu sunucuya.
+    //Alma verme işleminde hep json objesi kullanıyorum -> {veri:dat}
+    //Bunu şu formata çevir 2. butona basarken daha önce yolladıklarım yok oluyor o durumu düzelt.
+    //$("#list").html(d) -> ajax ile aldığım html'i ul'a ekledim.
+</script>

@@ -1,0 +1,26 @@
+﻿@using Mvc_Course.Library
+@{
+    ViewBag.Title = "Managers";
+}
+
+<h2>Managers</h2>
+
+<style>
+    .red
+    {
+        color:darkred;
+    }
+</style>
+
+@Html.Button("btnOk", ButtonType.button, "Gönder")
+<br />
+<br />
+@Html.Button("btnOk2",ButtonType.button,"Onay")
+<br />
+<br />
+@Html.Button("btnOk3","red",ButtonType.submit,"İptal")
+<br />
+<br />
+<hr />
+@Html.Paragraph("p1",4,"dashed",@<text><b style="color:blueviolet;">Emre Türkmen Custom Html Helpers</b></text>)
+<!--İlginç bir şekilde ilk br'yi görmüyor!-->

@@ -1,0 +1,17 @@
+﻿@using Mvc_Course.ViewModels
+@model ApplicationsPageViewModel
+@{
+    ViewBag.Title = "Applications";
+}
+
+<h2>Applications</h2>
+
+<div>
+    <b>Ad : </b>@Model.Student.Name<br />
+    <b>Soyad : </b>@Model.Student.Surname<br />
+    <b>Yaş : </b>@Model.Student.Age<br />
+    <hr />
+    <b>Adres : </b>@(Model.HomeAddress.AddressDescription+" "+ Model.HomeAddress.City)
+
+    <!--Model kullanmanın ViewData,ViewBag vs. kullanmaya göre de avantajı şu direk burada kullandığım modelin veri tipini vs. görebiliyorum.-->
+</div>

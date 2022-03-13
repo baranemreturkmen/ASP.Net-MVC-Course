@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "Erasers";
+}
+
+<h2>Erasers</h2>
+
+<button id="btnLoad" type="button" class="btn btn-success">Verileri Yükle</button>
+<br />
+<input id="txtData" type="text" class="form-control" placeholder="Veri Giriniz..." style="width:200px;" />
+<button id="btnLoad2" type="button" class="btn btn-success">Verileri Gönder &amp; Yükle</button>
+
+<hr />
+
+<div id="loading" class="alert alert-warning" style="display:none;">Yükleniyor...</div>
+
+<ul id="list" class="list-group">
+</ul>
+
+<script>
+    $(function () {
+
+        $("#btnLoad").click(function () {
+
+            $.ajax({
+                method: "GET",
+                url: "/Home9/GetDatas2",
+                beforeSend: function () {
+                    $("#list").empty();
+                    $("#loading").show(300);
+                }
+            }).done(function (d) {
+
+                //$("#list").html(d); -> View yerine artık bize gelen bir json olacak. İşin içinde <li> vs olmayacak dönen sadece json objesi olacak. Bu durumda benim <li>'leri burada oluşturmam gerek. Bana dönen tek şey Json ["Baran", "Emre", "Türkmen" ]
+
+                //Tarayıcıda bize gelen json objesinin ne olduğunu görmek için yaptık.
+                console.log(d);
+
+                for (var i in d) {
+                    //Burada ki d benim gelen json objem. Bu json'ın avantajı xml'e göre. Zaten json xml'e kıyasla kod tarafında veri
+                    //gönderimine vs. daha uyumlu. Xml daha karmaşık ama daha güvenliydi.
+
+                    var dd = d[i];
+
+                    var li = $("<li class='list-group-item'></li>");
+                    li.html(dd);
+
+                    $("#list").append(li);
+                }
+
+                //Ben böylece sunucudan sadece json'ı alıyorum sayfaya ait işleri vs. burada hallediyorum for'un içinde bu şekilde
+                //daha performanslı çalışmış oluyorum.
+
+            }).fail(function () {
+                alert("Hata oluştu...");
+            }).always(function () {
+                $("loading").hide(300);
+            });
+
+        });
+
+        $("#btnLoad2").click(function () {
+
+            var dat = $("#txtData").val();
+
+            $.ajax({
+                method: "POST",
+                data: {data:dat},
+                url: "/Home9/GetDatas2",
+                beforeSend: function () {
+                    $("#list").empty();
+                    $("#loading").show(300);
+                }
+            }).done(function (d) { //success
+
+                //Nesnenin Property'sine ulaştım.
+                //console.log(d.Name);
+
+                for (var i in d) {
+
+                    var dd = d[i];
+
+                    var li = $("<li class='list-group-item'></li>");
+                    li.html(dd);
+
+                    $("#list").append(li);
+                }
+
+                //$("#list").html(d);
+            }).fail(function () { //error
+                alert("Hata oluştu...");
+            }).always(function () { //complete -> eski javasctript kodlarında bu isimlendirmeler vardı. Daha sonra değiştirilmiş.
+                $("loading").hide(300);
+            });
+
+        });
+
+    });
+</script>

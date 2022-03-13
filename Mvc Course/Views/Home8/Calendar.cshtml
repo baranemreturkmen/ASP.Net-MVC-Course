@@ -1,0 +1,54 @@
+﻿@model Mvc_Course.Models.TodoItem
+@{
+    ViewBag.Title = "Calendar";
+}
+
+<h2>Calendar</h2>
+
+
+<div class="col-md-12">
+    @using (Ajax.BeginForm("Calendar",
+    new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        LoadingElementId = "loading",
+        LoadingElementDuration = 300,
+        UpdateTargetId = "result",
+        InsertionMode = InsertionMode.InsertAfter
+    }))
+    {
+        <div class="col-md-2">
+            @Html.TextBoxFor(x => x.Text, new { @class = "form-control" })
+        </div>
+
+        <div class="col-md-10">
+            <button type="submit" class="btn btn-success">Gönder</button>
+        </div>
+    }
+</div>
+
+<hr />
+
+<div class="col-md-12">
+    <ul id="result" class="list-group">
+        <li id="loading" class="list-group-item list-group-item-warning" style="display:none;"">Yükleniyor...</li>
+
+        @if(ViewBag.List != null)
+        {
+            foreach(Mvc_Course.Models.TodoItem item in ViewBag.List)
+            {
+                <li id="id_@item.Id" class="list-group-item">@item.Text</li>
+            }
+        }
+    </ul>
+</div>
+
+<!--Butona her bastığımda Form içerisinde ki verinin sunucuya gönderilip sunucuda, session'da ki listenin içerisine eklenip
+    geriye ul içerisine eklenen parçanın yani li'yi geri döndürmesini isteyeceğiz. Gelen veriyi li içerisinde en alta eklemek
+    istiyoruz. Yani bütün li'leri istemeyecek partial'da son eklediği metni isteyecek. Onu da li'nin altına ekliyor olacak.
+    Zaten dikkat edersen en tepede duran li yükeniyor metnini tutuyor sadece. O zaman InsertAfter yapmalıyım.-->
+
+<!--Ajax form ile text datasını modelimi kullanarak alıp Control Action'ınana (post olana) gidicem
+    Session'da liste varsa sessiondan alacam yoksa yeni oluşturucam. listeyi session'a kaydedip bir partial view vardı 
+    geri dönen, o an eklenen metni içeren modeli göndericem TodoItemPartialView'a, o da bana bir li oluşturup dönecek. li AjaxBeginFormda 
+    belirttiğim gibi sonuç isimli ul'nin içerisine insert after olarak eklenecek.-->

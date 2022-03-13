@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "Exams";
+}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+
+<h2>Exams</h2>
+
+<div>
+    <div class="container">
+        
+        <div class="row-">
+            <div class="col-md-12">
+                <h2>DropDown Doldurma</h2>
+                <hr />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+             @using (Html.BeginForm())
+            {
+                <div class="form-horizontal">
+
+                    <div class="form-group">
+                        <label class="col-md-2 control label">City : </label>
+                        <div class="col-md-10">
+                            @Html.DropDownList("SelectedCityId", (SelectList)ViewBag.CitiesData, "Lütfen seçiniz",new { @class="form-control dropdown"})
+                            <!--Bu sayfada model yapısı kullansaydım eğer DropDownLisFor ile modele ait propertyeri kullanabilirdim.-->
+
+                            <!--Şuan sadece model üzerinden değil de ViewBag üzerinden çalıştığım için DropDownList bizim için
+                                yeterli olacaktır.-->
+
+                            <!--Yukarıdaki DropDowmListi kullanırken controller tarafında DropDownListe verdiğim isim ile 
+                                SelectedCityId DropDownList'e controller tarafında erişebilirim.-->
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control label">Country : </label>
+                        <div class="col-md-10">
+                            @Html.DropDownList("SelectedCountryId", (SelectList)ViewBag.CountriesData, "Lütfen seçiniz", new { @class = "form-control dropdown" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-10 col-md-offset-2">
+                            <button class="btn btn-success" type="submit">Send</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-10 col-md-offset-2">
+                            <div class="alert alert-info">
+                                <b>Selected Country ID :</b> @ViewBag.SelectedCountryId<br />
+                                <b>Selected City ID :</b> @ViewBag.SelectedCityId
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            }
+            </div>
+        </div>
+    </div>
+</div>

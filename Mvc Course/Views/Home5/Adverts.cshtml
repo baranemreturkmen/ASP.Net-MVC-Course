@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "Adverts";
+}
+
+<h2>Adverts Page</h2>
+
+<!--<div>
+    <h2>
+        Adverts Page
+    </h2>
+    <b>Ad - Soyad :</b>
+    @@ViewData["text1"]-->
+    <!--text1 zaten string yapısında olduğu için çevirmeye gerek yok.-->
+    <!--check1 boolean .ToString() kullanmana gerek yok yine de arkada otomatik olarak çeviriliyor kodlar sayfaya
+        yansıtılırken.-->
+    <!--<br />
+    <b>Bool veri türü : </b>
+    @@ViewData["check1"].ToString()    
+    <br />
+</div>-->
+
+<!--2 tane @@ yoruma alınca sıkıntı oldu ondan koyduk yoksa tek bir tane vardı.-->
+
+<!--<div>
+    <h2>
+        Adverts Page
+    </h2>
+    <b>Ad - Soyad :</b>
+    @@ViewBag.text1-->
+    <!--text1 zaten string yapısında olduğu için çevirmeye gerek yok.-->
+    <!--<br />
+    <b>Bool veri türü : </b>
+    @@ViewBag.check1
+    <br />
+</div>-->
+
+<div>
+    <b>Ad - Soyad :</b>
+    @TempData["text1"]
+    <!--text1 zaten string yapısında olduğu için çevirmeye gerek yok.-->
+    <br />
+    <b>Bool veri türü : </b>
+    @TempData["check1"]
+    <br />
+</div>

@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <!--Genelde ccs elementleri header içerisine yazılıyor.-->
+    <!--Margin div dışına 10 piksellik boşluk verecek. Paddingde iç kısımlarda boşluk sağlıyor.-->
+    <style>
+        .block {
+            display: block;
+            margin: 10px;
+            border: 2px dotted gray;
+            padding: 10px;
+        }
+
+        .block2 {
+            display: inline-block;
+            margin: 5px;
+            border: 2px dotted #ff6a00;
+            padding: 10px;
+        }
+
+        #menu ul li {
+            display: inline-block;
+            width: 100px;
+            height: 30px;
+            text-align: center;
+            border: 1px solid #00ffff;
+            background-color: blueviolet;
+            margin: 5px;
+            line-height: 30px;
+            vertical-align: middle;
+        }
+
+            #menu ul li a {
+                color: #ffffff;
+                text-decoration: none;
+                font-size: smaller;
+            }
+
+        #menu li:hover {
+            background-color: #ffd800;
+        }
+
+            #menu li:hover a {
+                color: #0026ff;
+            }
+    </style>
+
+    <!--# ile menu idsine sahip elementlere özel bir css classı yazıyorum. ul li ile menu idsine sahip elementlerin ulsinin altındaki lilere bu işlemi yap diyoruz.-->
+    <!--Spesifik bir renk belirlemek istiyorsan # bas ve bekle!-->
+    <!--Hover ile menü üzerine geldiğimde o menüye ait belli başlı özellikleri değiştirebilirim.-->
+    <!--#menu ul li a dediğimde ve #menu a dediğimde bir değişiklik olmuyor ama 2 ihtimal de var olsaydı ve ben sadece biri çağırsaydım ne olurdu? Bu durumda #menu ul li a için yukarıda css yazdığım zaman #menu aya yansımıyor bu konuya dikkat edilsin.-->
+</head>
+<body>
+
+    <div id="menu" class="block">
+        @*Header*@
+        <ul>
+            <li>@Html.ActionLink("HomePageLink", "HomePage", "Home")</li>
+            <li>@Html.ActionLink("AboutLink", "About", "Home")</li>
+            <li>@Html.ActionLink("ContactLink", "Contact", "Home")</li>
+            <!--Html.ActionLink her biri aslında html a elementine link elementine dönüşüyor bunu unutma!-->
+        </ul>
+        <hr />
+    </div>
+
+    <div class="block">
+        @RenderBody()
+        <!--Layout sayfalarında tüm html iskeletimiz yer alır.-->
+        <!--Render body kısmına o sayfanın değişken olan kısmı gelir yerleşir. Yani Homeun altında yazdığımız herşey buraya geliyor.-->
+    </div>
+
+    <div class="block">
+        @*Footer*@
+        <hr />
+        <b>Tüm hakları saklıdır. &copy;</b>
+    </div>
+
+    <div id="menu">
+        @Html.ActionLink("CustomersPageLink", "Customers", "Home")
+    </div>
+</body>
+</html>

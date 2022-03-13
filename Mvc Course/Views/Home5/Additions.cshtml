@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Additions";
+}
+
+<h2>Additions</h2>
+
+<div>
+
+    @{
+        //View içerisinde csharp kodu yazmak istiyorsan @ ile blok oluşturmalısın.
+        SelectListItem[] liste = new SelectListItem[3]
+        {
+            new SelectListItem() { Text = "Baran",Value="B"},
+            new SelectListItem() {Text = "Emre",Value="E"},
+            new SelectListItem() {Text="Türkmen",Value="T"}
+            };
+        //Burada şöyle bir olay var Text değerleri frontend tarafında göreceğim değerler. Value değerleri bana post ile frontend
+        //tarafından backende dönecek değerler.
+
+        //Fakat burada value değerlerini belirtmeseydim eğer bu durumda backende text değerlerim dönecekti, boş değer dönmesi
+        //gibi bir durum gerçekleşmeyecekti.
+    }
+
+    @*<form method="post" action="/">
+
+        </form>*@
+
+    <!--Yukarıda ki form aşağıdaki yapı ile aynı işi yapıyor. Aşağıdaki yapı bizi uzun uzun htmller yazmaktan kurtarıyor.-->
+
+    <!--BeginForm yapısını HtmlHelper sayesinde kullanıyorum-->
+
+    @using (Html.BeginForm())
+    {
+        @Html.TextBox("text1")<br />
+        @Html.DropDownList("list1", liste)<br />
+        @("Onaylıyorum") @Html.CheckBox("check1")
+        <hr />
+        <input type="submit" value="Send" />
+    }
+
+    <!--Frontend tarafında veri alacaksam eğer backende 2 yapıya ihtiyacım var Html.BeginForm ve submit butonu yapısı.-->
+
+
+</div>

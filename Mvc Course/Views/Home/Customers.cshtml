@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Customers";
+}
+
+<h2>Customers</h2>
+
+@HttpUtility.HtmlEncode("<b> Emre Türkmen<b>")
+<br />
+@HttpUtility.UrlEncode("http://wwww.emreturkmen.com.tr")
+<br />
+@HttpUtility.HtmlDecode("&lt;b&gt; Emre T&#252;rkmen&lt;b&gt;")
+<br />
+@HttpUtility.HtmlDecode("http%3a%2f%2fwwww.emreturkmen.com.tr")
+<br />
+
+<hr />
+@Html.Raw("<b>Emre Türkmen<b>")
+<br />
+@Html.Raw("<script type='text/javascript'> alert('merhaba mvc'); </script>")
+<br />
+@Html.Raw("<style> h2 {color:red;}</style>")
+<br /> <!--Html ccs javascript kodu yazıp webe aktarabilirim Html.raw sayesinde.-->

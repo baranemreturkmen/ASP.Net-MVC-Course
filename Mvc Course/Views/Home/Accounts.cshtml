@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Accounts";
+}
+
+<h2>Accounts</h2>
+
+<a href="/Home/Customers">Customers sayfasına gidiyorum!</a>
+
+<hr />
+
+@Html.ActionLink("Customer sayfasına git!","Customers","Home")<br />
+
+<hr />
+
+<a id="link1" name="link1" href="@Url.Action("Customers","Home",null)">Customers sayfasına git!</a><br />
+
+@Url.Action("Customers")<br /> <!--Customersın homecontrollera bağlı olduğunu otomatik buldu.-->
+@Url.Content("~/Home/Customers")<br /> <!--Sözde localhostu kaldırıp tilde sayesinde sanal path veriyor ama emin olamadım-->
+@Url.Encode("~/Home/Customers?arama=Emre Türkmen")<br /> <!--Encode ediyor özel karakterleri-->

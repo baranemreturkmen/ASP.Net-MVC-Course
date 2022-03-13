@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Bills";
+}
+
+<h2>Bills</h2>
+
+<button id="btnLoad" type="button" class="btn btn-success">Verileri Yükle</button>
+
+<hr />
+
+<div id="loading" class="alert alert-warning" style="display:none;">Yükleniyor...</div>
+
+<ul id="list" class="list-group">
+
+</ul>
+
+<script>
+
+    $(function () {
+        $("#btnLoad").click(function () {
+
+            $("#list").empty();
+
+            $("#loading").show(300, function (d) {
+
+                $.get("/Home9/GetDatas", function (d) {
+
+                    $("#list").html(d);
+                    $("#loading").hide(300);
+                });
+            });
+        });           
+    });
+    //butona tıkladığımda loading gelecek 300 ms'de sonra get metodu çalışacak sonra 300 ms'de loading elementi gizlenecek.
+    //$.get -> ilk parametre çalıştırılacak adres, ikinci parametre fonksiyon. Parametre d'nin ismen bir önemi yok istediğin ismi
+    //verebilirsin. Adresten çekilen datayı parametreye aktarıyor $.get(). Dolayısıyla ne döndürdüysen o d'nin içinde.
+    //Sayfadaki ul elementini yakalayıp html metodu ile jquery'den dönen datayı içine ekliyorum.
+
+    //Şimdi jquery'de javascriptte şöyle bir mantık var show,get ve hide adımları ben her ne kadar süre vermiş de olsam birbirlerini beklemeden çalışır. Bundan dolayı veriler geldikten sonra gizleme işlemini çalıştırmam gerekiyor.
+    //Bu yüzden hide get metodunun içerisinde ki metodun içerisinde. Show ve hide 2. parametresinde animasyon gerçekleştikten sonra çalışacak fonksiyonu alır. Birbirini beklemeden çalışma durumu olduğu için show işleminde ki metoda parametre olarak get metodunu geçiyorum.
+
+    //Butona her bastığımda önceki veriler temizlensin istiyorum. ->$("#list").empty();
+
+</script>
